@@ -3,8 +3,8 @@ let canvasContext;
 
 let snakeDirection = 'right';
 let snakeBody = [
-    {x: 50, y: 50},
-    {x: 70, y: 50}
+    {x: 60, y: 60},
+    {x: 80, y: 60}
 ]
 
 let appleX = getRandomX();
@@ -23,8 +23,8 @@ window.onload = function() {
     
     
     setInterval(() => {
-        //eatApple();
-        determineBorderCollision();
+        eatApple();
+        //determineBorderCollision();
         moveSnake()
         drawCanvas();
         drawSnake();
@@ -45,7 +45,7 @@ function drawSnake() {
 }
     
 function drawApple() { 
-    colorCircle(appleX, appleY, 5, 'red');
+    colorCircle(appleX, appleY, 10, 'red');
 }
 
 //apple functions
@@ -66,10 +66,10 @@ function eatApple() {
 }*/
 
 function getRandomX() {
-    return Math.floor((Math.random() * 795));
+    return Math.floor((Math.random() * 40)) * 20;
 }
 function getRandomY() {
-    return Math.floor((Math.random() * 595));
+    return Math.floor((Math.random() * 30)) * 20;
 }
 
 //Helper functions to draw board, snake, apple, and get random coordinates
@@ -138,7 +138,7 @@ function determineBorderCollision () {
         || snakeBody[0].y >= canvas.height || snakeBody[0].y <=0) {
         let snakeDirection = '';
         isGameOver = true;
-        alert('Game Over!');
+        console.log('Game Over!');
     }
 }
 
