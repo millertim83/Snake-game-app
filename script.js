@@ -20,10 +20,11 @@ window.onload = function() {
     console.log(appleX);
     console.log(appleY);
 
-    //determineBorderCollision();
+    
     
     setInterval(() => {
-        eatApple();
+        //eatApple();
+        determineBorderCollision();
         moveSnake()
         drawCanvas();
         drawSnake();
@@ -106,29 +107,23 @@ function determineSnakeDirection(event) {
 function moveSnake() {
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = Object.assign(snakeBody[i], snakeBody[i-1]);
+        console.log(snakeBody[0].x, snakeBody[0].y);
     
         switch(snakeDirection) {
             case 'left': 
                 snakeBody[0].x -= 20;
-                     //snakeBody[0].y = snakeBody[0].y;
-                     console.log('moving left');
-                break;
+                    break;
 
-            case 'up': snakeBody[0].y -= 20;
-                   //snakeBody[0].x = snakeBody[0].x;
-                   console.log('moving up');
-                break;
+            case 'up': 
+                snakeBody[0].y -= 20;
+                    break;
 
-            case 'right': snakeBody[0].x += 20;
-                      //snakeBody[0].y = snakeBody[0].y;
-                      console.log('moving right');
-                break;
+            case 'right': 
+                snakeBody[0].x += 20;
+                    break;
 
             case 'down': snakeBody[0].y += 20;
-                     //snakeBody[0].x = snakeBody[0].x;
-                     console.log('moving down');
         }
-    
     }
 }
 
@@ -138,13 +133,14 @@ function moveSnake() {
 }
 */
 
-/*function determineBorderCollision () {
-    if (snakeBody[0].x >= canvas.width) {
+function determineBorderCollision () {
+    if (snakeBody[0].x >= canvas.width || snakeBody[0].x <= 0
+        || snakeBody[0].y >= canvas.height || snakeBody[0].y <=0) {
         let snakeDirection = '';
         isGameOver = true;
-        console.log('Game Over!');
+        alert('Game Over!');
     }
-} */
+}
 
 
 
