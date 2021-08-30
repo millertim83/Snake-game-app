@@ -17,46 +17,47 @@ window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
 
-    determineBorderCollision();
-    setInterval(() => {
-        drawEverything()
-        moveSnake()
-    }, 250);
-    //setInterval(moveSnake, 250);
-    //setInterval(addSnakeLink, 1000);
-    getRandomX();
-    getRandomY();
-    //determineSnakeDirection();
+    console.log(appleX);
+    console.log(appleY);
+
     //determineBorderCollision();
-
-
+    
+    setInterval(() => {
+        eatApple();
+        moveSnake()
+        drawCanvas();
+        drawSnake();
+        drawApple();
+    }, 250);
+    //setInterval(addSnakeLink, 1000);
     
 }
        
-function drawEverything() {
-    //draw canvas
+function drawCanvas() {    
     colorRect(0, 0, canvas.width, canvas.height, 'gray');
+}
 
-    //draw snake
+function drawSnake() {
     snakeBody.forEach(snakeBodyLink => {
         colorRect(snakeBodyLink.x, snakeBodyLink.y, 20, 20, 'lime');
     });
+}
     
-    //draw apple
+function drawApple() { 
     colorCircle(appleX, appleY, 5, 'red');
 }
 
-
-    
 //apple functions
-/*function isAppleEaten() {
+function eatApple() {
     if (snakeBody[0].x === appleX && snakeBody[0].y === appleY) {
+        //appleX = getRandomX();
+        //appleY = getRandomY();
         console.log('apple has been eaten');
-        return true;
-    } return false;
+        drawApple();
+    }
 }
 
-function moveApple() {
+/*function moveApple() {
     if (isAppleEaten) {
     appleX = getRandomX();
     appleY = getRandomY();
@@ -137,13 +138,13 @@ function moveSnake() {
 }
 */
 
-function determineBorderCollision () {
+/*function determineBorderCollision () {
     if (snakeBody[0].x >= canvas.width) {
         let snakeDirection = '';
         isGameOver = true;
         console.log('Game Over!');
     }
-} 
+} */
 
 
 
