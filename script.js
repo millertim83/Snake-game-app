@@ -1,11 +1,15 @@
 let canvas;
 let canvasContext;
+let score = 0;
 
-let snakeDirection = 'right';
+
+
+let snakeDirection = 'down';
 let snakeBody = [
-    {x: 60, y: 60},
-    {x: 80, y: 60}
+    {x: 50, y: 70},
+    {x: 70, y: 70}
 ]
+
 
 let appleX = getRandomX();
 let appleY = getRandomY();
@@ -17,20 +21,20 @@ window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
 
-    console.log(appleX);
-    console.log(appleY);
-
-    
-    
     setInterval(() => {
-        eatApple();
+        
         //determineBorderCollision();
-        moveSnake()
+        moveSnake();
         drawCanvas();
         drawSnake();
         drawApple();
-    }, 250);
-    //setInterval(addSnakeLink, 1000);
+        eatApple();
+        }, 1000);
+        getRandomX();
+        getRandomY();
+        
+        //setInterval(addSnakeLink, 300);
+        
     
 }
        
@@ -48,14 +52,49 @@ function drawApple() {
     colorCircle(appleX, appleY, 10, 'red');
 }
 
-//apple functions
+
+
+
+//apple functions 
 function eatApple() {
-    if (snakeBody[0].x === appleX && snakeBody[0].y === appleY) {
+    if (snakeDirection == 'down') {
+        if (snakeBody[0].x + 10  === appleX && snakeBody[0].y + 30 === appleY) {
+        console.log('apple has been eaten');
+        score = score + 1;
+        }
+    }
+    if (snakeDirection == 'up') {
+        if (snakeBody[0].x + 10  === appleX && snakeBody[0].y - 10 === appleY) {
+        console.log("apple has been eaten");
+        score = score + 1;
+        }
+        
+        
+    }
+    if (snakeDirection == 'left') {
+        if (snakeBody[0].x - 10  === appleX && snakeBody[0].y + 10 === appleY) {
+            console.log("apple has been eaten");
+            score = score + 1;
+        }
+    }
+    if (snakeDirection == 'right') {
+        if (snakeBody[0].x + 30  === appleX && snakeBody[0].y + 10 === appleY) {
+            console.log("apple has been eaten");
+            score = score + 1;
+        }
+     
+       
+    }
+    document.getElementById('score').innerHTML = score;
+
+    
+    /*if (snakeBody[0].x === appleX && snakeBody[0].y === appleY) {
         //appleX = getRandomX();
         //appleY = getRandomY();
         console.log('apple has been eaten');
         drawApple();
-    }
+    } */
+    
 }
 
 /*function moveApple() {
@@ -66,10 +105,10 @@ function eatApple() {
 }*/
 
 function getRandomX() {
-    return Math.floor((Math.random() * 40)) * 20;
+    return Math.floor((Math.random() * 39)) * 20;
 }
 function getRandomY() {
-    return Math.floor((Math.random() * 30)) * 20;
+    return Math.floor((Math.random() * 29)) * 20;
 }
 
 //Helper functions to draw board, snake, apple, and get random coordinates
@@ -102,12 +141,13 @@ function determineSnakeDirection(event) {
     if (event.code === 'ArrowDown' && snakeDirection !== 'up') {
         snakeDirection = 'down';
     }
+    
 }
 
 function moveSnake() {
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = Object.assign(snakeBody[i], snakeBody[i-1]);
-        console.log(snakeBody[0].x, snakeBody[0].y);
+        //console.log(snakeBody[0].x, snakeBody[0].y);
     
         switch(snakeDirection) {
             case 'left': 
@@ -141,9 +181,3 @@ function determineBorderCollision () {
         console.log('Game Over!');
     }
 }
-
-
-
-
-
-
