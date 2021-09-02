@@ -70,7 +70,7 @@ function eatApple() {
     }
     if (snakeDirection == 'up') {
         if (snakeBody[0].x + 10  === appleX && snakeBody[0].y - 10 === appleY) {
-            //snakeBody.push({x: (snakeBody[0].x), y: (snakeBody[snakeBody.length -1].y)});
+            snakeBody.push({x: (snakeBody[0].x), y: (snakeBody[snakeBody.length -1].y)});
             console.log("apple has been eaten");
             score = score + 1;
         }
@@ -79,14 +79,14 @@ function eatApple() {
     }
     if (snakeDirection == 'left') {
         if (snakeBody[0].x - 10  === appleX && snakeBody[0].y + 10 === appleY) {
-            //snakeBody.push({x: (snakeBody[snakeBody.length -1].x), y: (snakeBody[0].y)});
+            snakeBody.push({x: (snakeBody[snakeBody.length -1].x), y: (snakeBody[0].y)});
             console.log("apple has been eaten");
             score = score + 1;
         }
     }
     if (snakeDirection == 'right') {
         if (snakeBody[0].x + 30  === appleX && snakeBody[0].y + 10 === appleY) {
-            //snakeBody.push({x: (snakeBody[snakeBody.length -1].x), y: (snakeBody[0].y)});
+            snakeBody.push({x: (snakeBody[snakeBody.length -1].x), y: (snakeBody[0].y)});
             console.log("apple has been eaten");
             score = score + 1;
         }
@@ -119,7 +119,6 @@ function getRandomY() {
     return Math.floor((Math.random() * 29)) * 20;
 }
 
-//Helper functions to draw board, snake, apple, and get random coordinates
 function colorCircle(centerX, centerY, radius, drawColor) {
     canvasContext.fillStyle = 'red'
     canvasContext.beginPath();
