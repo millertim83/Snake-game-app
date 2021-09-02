@@ -29,18 +29,13 @@ window.onload = function() {
         drawSnake();
         drawApple();
         eatApple();
-        //logSnakePosition();
         }, 300);
         getRandomX();
         getRandomY();
+        console.log(appleX);
+        console.log(appleY);
 }
-
-//function logSnakePosition() {
-    //console.log(snakeBody[snakeBody.length - 1].x);
-    //console.log(snakeBody[snakeBody.length -1].y);
-    
-//}
-       
+      
 function drawCanvas() {    
     colorRect(0, 0, canvas.width, canvas.height, 'gray');
 }
@@ -55,62 +50,21 @@ function drawApple() {
     colorCircle(appleX, appleY, 10, 'red');
 }
 
-
-
-
-//apple functions 
 function eatApple() {
-    if (snakeDirection == 'down') {
-        if (snakeBody[0].x + 10  === appleX && snakeBody[0].y + 30 === appleY) {
-            //snakeBody.push({x: (snakeBody[0].x), y: (snakeBody[snakeBody.length -1].y)});
-            console.log('apple has been eaten');
-            score = score + 1;
-        }
-        
-    }
-    if (snakeDirection == 'up') {
-        if (snakeBody[0].x + 10  === appleX && snakeBody[0].y - 10 === appleY) {
-            snakeBody.push({x: (snakeBody[0].x), y: (snakeBody[snakeBody.length -1].y)});
-            console.log("apple has been eaten");
-            score = score + 1;
-        }
-        
-        
-    }
-    if (snakeDirection == 'left') {
-        if (snakeBody[0].x - 10  === appleX && snakeBody[0].y + 10 === appleY) {
-            snakeBody.push({x: (snakeBody[snakeBody.length -1].x), y: (snakeBody[0].y)});
-            console.log("apple has been eaten");
-            score = score + 1;
-        }
-    }
-    if (snakeDirection == 'right') {
-        if (snakeBody[0].x + 30  === appleX && snakeBody[0].y + 10 === appleY) {
-            snakeBody.push({x: (snakeBody[snakeBody.length -1].x), y: (snakeBody[0].y)});
-            console.log("apple has been eaten");
-            score = score + 1;
-        }
-     
-       
-    }
-    document.getElementById('score').innerHTML = score;
-
+    const dx = appleX - snakeBody[0].x;
+    const dy = appleY - snakeBody[0].y;
     
-    /*if (snakeBody[0].x === appleX && snakeBody[0].y === appleY) {
-        //appleX = getRandomX();
-        //appleY = getRandomY();
-        console.log('apple has been eaten');
-        drawApple();
-    } */
+    if (dx == 10 && dy == 10) {
+        document.getElementById('score').innerHTML = score;
+        score = score + 1;
+        snakeBody.push({ x: null, y: null });
+        appleX = getRandomX();
+        appleY = getRandomY();
     
+    }
 }
 
-/*function moveApple() {
-    if (isAppleEaten) {
-    appleX = getRandomX();
-    appleY = getRandomY();
-    }
-}*/
+
 
 function getRandomX() {
     return Math.floor((Math.random() * 39)) * 20;
@@ -155,6 +109,7 @@ function moveSnake() {
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = Object.assign(snakeBody[i], snakeBody[i-1]);
         console.log(snakeBody[0].x, snakeBody[0].y);
+    }
     
         switch(snakeDirection) {
             case 'left': 
@@ -171,7 +126,7 @@ function moveSnake() {
 
             case 'down': snakeBody[0].y += 20;
         }
-    }
+    
 }
 
 function determineBorderCollision () {
@@ -182,3 +137,6 @@ function determineBorderCollision () {
         console.log('Game Over!');  
     }
 }
+
+
+  
