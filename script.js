@@ -4,6 +4,7 @@ let score = 0;
 
 
 
+
 let snakeDirection = 'right';
 let snakeBody = [
     {x: 50, y: 70},
@@ -29,11 +30,11 @@ window.onload = function() {
         drawSnake();
         drawApple();
         eatApple();
+        isSnakeTouchingItself();
         }, 300);
         getRandomX();
         getRandomY();
-        console.log(appleX);
-        console.log(appleY);
+        
 }
       
 function drawCanvas() {    
@@ -108,7 +109,6 @@ function determineSnakeDirection(event) {
 function moveSnake() {
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = Object.assign(snakeBody[i], snakeBody[i-1]);
-        console.log(snakeBody[0].x, snakeBody[0].y);
     }
     
         switch(snakeDirection) {
@@ -138,5 +138,14 @@ function determineBorderCollision () {
     }
 }
 
+function isSnakeTouchingItself() {
+    for (let i = 1; i < snakeBody.length; i++) {
+        if (snakeBody[0].x === snakeBody[i].x && snakeBody[0].y === snakeBody[i].y) {
+            snakeDirection = '';
+            isGameOver = true;
+            console.log('Game Over!');
+        }
+    }
+}
 
   
