@@ -1,8 +1,8 @@
 # Snake Game
-###This is my fifth project for the Software Development Mastermind program. To complete this project, I used HTML, CSS, and JavaScript.
+This is my fifth project for the Software Development Mastermind program. To complete this project, I used HTML, CSS, and JavaScript.
 
 ##Project Deliverables:
-####
+
 Snake game ends when:
 Snake touches itself
 Snake touches the outside border
