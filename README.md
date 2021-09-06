@@ -1,5 +1,5 @@
 <img width="1128" alt="Screen Shot 2021-09-06 at 11 34 52 AM" src="https://user-images.githubusercontent.com/80060826/132240128-06081ff8-b868-434b-b207-0d6e087f858a.png">
-# Snake Game
+## Snake Game
 This is my fifth project for the Software Development Mastermind program. To complete this project, I used HTML, CSS, and JavaScript.
 
 ## Project Deliverables:
