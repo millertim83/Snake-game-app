@@ -6,11 +6,29 @@
         <title>Hungry Snake</title>
     </head>
     <body>
-        <h1>Hungry Snake</h1>
-        <h2>Apple Count: <span id="score">0</span></h2>
-        <p>Use the arrow keys to move the snake and eat the apple. 
-            Don't touch the walls, and make sure the snake doesn't touch itself!
-        </p>
+        
+        <div id="game-over">
+         <h3>Game Over!</h3>
+            <button id="new-game">New Game</button>
+        </div>
+       
+        <div id="game-container">
+            
+            
+            <h1>Hungry Snake</h1>
+            <div id="side-panel" class="side-panel">
+                <h2>Game play</h2>
+                <p>Use the arrow keys to move the snake and eat the apple. 
+                Don't touch the walls, and make sure the snake doesn't touch itself!
+                </p>
+                <h2>Apple Count: <span id="score">0</span></h2>
+            </div>
+
+            <div id="start-screen">
+
+            </div>
+            
+        </div>  
 
         <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black"></canvas>
 
