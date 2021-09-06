@@ -26,7 +26,7 @@ window.onload = function() {
         eatApple();
         isSnakeTouchingItself();
         determineBorderCollision();
-    }, 300);
+    }, 100);
         
         getRandomX();
         getRandomY();
