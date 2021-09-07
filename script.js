@@ -15,7 +15,7 @@ let appleY = getRandomY();
 let appleIsEaten = false;
 
 window.onload = function() {
-    canvas = document.getElementById('gameCanvas');
+    canvas = document.getElementById('game-canvas');
     canvasContext = canvas.getContext('2d');
 
     setInterval(() => {

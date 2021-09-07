@@ -3,6 +3,12 @@ h1 {
     font-size: 60px;
 }
 
+#game-canvas {
+    border: 3px solid black;
+    border-radius: 10px;
+
+}
+
 #side-panel {
     height: 250px;
     width: 200px;
