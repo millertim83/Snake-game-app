@@ -1,23 +1,25 @@
-let canvas;
-let canvasContext;
-let score = document.getElementById('score').innerHTML = parseInt(0);
+const canvas = document.getElementById('game-canvas');
+const canvasContext = canvas.getContext('2d');
+let score = document.getElementById('score');
 let gameOverScreen = document.getElementById('game-over');
 let newGameBtn = document.getElementById('new-game');
 
-let snakeDirection = '';
-let snakeBody = [
-    {x: 50, y: 70},
-    {x: 70, y: 70}
-]
+GRID_SIZE = 20;
 
-let appleX = getRandomX();
-let appleY = getRandomY();
-let appleIsEaten = false;
+let apple = {
+    x: getRandomX(),  
+    y: getRandomY()
+}
+
+let snake = {
+    body: [{x: 50, y: 70},
+        {x: 70, y: 70}],
+    direction: '' 
+}
+
+score.textContent = 0
 
 window.onload = function() {
-    canvas = document.getElementById('game-canvas');
-    canvasContext = canvas.getContext('2d');
-
     setInterval(() => {
         moveSnake();
         drawCanvas();
@@ -37,34 +39,33 @@ function drawCanvas() {
 }
 
 function drawSnake() {
-    snakeBody.forEach(snakeBodyLink => {
-        colorRect(snakeBodyLink.x, snakeBodyLink.y, 20, 20, 'lime');
+    snake.body.forEach(({x, y}) => {
+        colorRect(x, y, GRID_SIZE, GRID_SIZE, 'lime');
     });
 }
     
 function drawApple() { 
-    colorCircle(appleX, appleY, 10, 'red');
+    colorCircle(apple.x, apple.y, GRID_SIZE / 2, 'red');
 }
 
 function eatApple() {
-    const dx = appleX - snakeBody[0].x;
-    const dy = appleY - snakeBody[0].y;
+    const dx = apple.x - snake.body[0].x;
+    const dy = apple.y - snake.body[0].y;
     
-    if (dx == 10 && dy == 10) {
-        score += 1;
-        document.getElementById('score').innerHTML = score;
-        snakeBody.push({ x: null, y: null });
-        appleX = getRandomX();
-        appleY = getRandomY();
+    if (dx == GRID_SIZE / 2 && dy == GRID_SIZE / 2 ) {
+        score.textContent = parseInt(score.textContent) + 1;
+        snake.body.push({ x: null, y: null });
+        apple.x = getRandomX();
+        apple.y = getRandomY();
         
     }
 }
 
 function getRandomX() {
-    return Math.floor((Math.random() * 39) + 1) * 20;
+    return Math.floor((Math.random() * 39) + 1) * GRID_SIZE;
 }
 function getRandomY() {
-    return Math.floor((Math.random() * 29) + 1) * 20;
+    return Math.floor((Math.random() * 29) + 1) * GRID_SIZE;
 }
 
 function colorCircle(centerX, centerY, radius, drawColor) {
@@ -82,57 +83,57 @@ function colorRect(leftX, topY, width, height, drawColor) {
 document.addEventListener('keydown', determineSnakeDirection);
 
 function determineSnakeDirection(event) {
-    if (event.code === 'ArrowLeft' && snakeDirection !== 'right') {
-        snakeDirection = 'left';
+    if (event.code === 'ArrowLeft' && snake.direction !== 'right') {
+        snake.direction = 'left';
     }
-    if (event.code === 'ArrowUp' && snakeDirection !== 'down') {
-        snakeDirection = 'up';
+    if (event.code === 'ArrowUp' && snake.direction !== 'down') {
+        snake.direction = 'up';
     }
-    if (event.code === 'ArrowRight' && snakeDirection !== 'left') {
-        snakeDirection = 'right';
+    if (event.code === 'ArrowRight' && snake.direction !== 'left') {
+        snake.direction = 'right';
     }
-    if (event.code === 'ArrowDown' && snakeDirection !== 'up') {
-        snakeDirection = 'down';
+    if (event.code === 'ArrowDown' && snake.direction !== 'up') {
+        snake.direction = 'down';
     }
     
 }
 
 function moveSnake() {
-    for (let i = snakeBody.length - 1; i > 0; i--) {
-        snakeBody[i] = Object.assign(snakeBody[i], snakeBody[i-1]);
+    for (let i = snake.body.length - 1; i > 0; i--) {
+        snake.body[i] = Object.assign(snake.body[i], snake.body[i-1]);
     }
     
-        switch(snakeDirection) {
+        switch(snake.direction) {
             case 'left': 
-                snakeBody[0].x -= 20;
+                snake.body[0].x -= GRID_SIZE;
                     break;
 
             case 'up': 
-                snakeBody[0].y -= 20;
+                snake.body[0].y -= GRID_SIZE;
                     break;
 
             case 'right': 
-                snakeBody[0].x += 20;
+                snake.body[0].x += GRID_SIZE;
                     break;
 
-            case 'down': snakeBody[0].y += 20;
+            case 'down': snake.body[0].y += GRID_SIZE;
         }
     
 }
 
 function determineBorderCollision () {
-    if (snakeBody[0].x + 20 >= canvas.width || snakeBody[0].x <= 0
-        || snakeBody[0].y <= 0 || snakeBody[0].y + 20 >= canvas.height) {
-        snakeDirection = ''; 
+    if (snake.body[0].x + GRID_SIZE >= canvas.width || snake.body[0].x <= 0
+        || snake.body[0].y <= 0 || snake.body[0].y + GRID_SIZE >= canvas.height) {
+        snake.direction = ''; 
         gameOverScreen.style.display = 'block'; 
     }
 }
 
 function isSnakeTouchingItself() {
-    if (snakeDirection != '') {
-        for (let i = 1; i < snakeBody.length; i++) {
-            if (snakeBody[0].x === snakeBody[i].x && snakeBody[0].y === snakeBody[i].y) {
-                snakeDirection = '';
+    if (snake.direction != '') {
+        for (let i = 1; i < snake.body.length; i++) {
+            if (snake.body[0].x === snake.body[i].x && snake.body[0].y === snake.body[i].y) {
+                snake.direction = '';
                 gameOverScreen.style.display = 'block'; 
             }
         }
@@ -141,14 +142,14 @@ function isSnakeTouchingItself() {
 
 newGameBtn.addEventListener('click', restartGame);
 function restartGame() {
-    score = document.getElementById('score').innerHTML = parseInt(0);
-    snakeDirection = '';
-     snakeBody = [
+    score.textContent = 0;
+    snake.direction = '';
+     snake.body = [
         {x: 50, y: 70},
         {x: 70, y: 70}
     ]
-    appleX = getRandomX();
-    appleY = getRandomY();
+    apple.x = getRandomX();
+    apple.y = getRandomY();
     gameOverScreen.style.display = 'none';
 }
 
