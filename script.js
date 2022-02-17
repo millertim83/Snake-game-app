@@ -3,6 +3,7 @@ const canvasContext = canvas.getContext('2d');
 let score = document.getElementById('score');
 let gameOverScreen = document.getElementById('game-over');
 let newGameBtn = document.getElementById('new-game');
+let gameOver = false;
 
 GRID_SIZE = 20;
 
@@ -82,7 +83,7 @@ function colorRect(leftX, topY, width, height, drawColor) {
 
 document.addEventListener('keydown', determineSnakeDirection);
 
-function determineSnakeDirection(event) {
+function determineSnakeDirection(event) { 
     if (event.code === 'ArrowLeft' && snake.direction !== 'right') {
         snake.direction = 'left';
     }
@@ -94,8 +95,7 @@ function determineSnakeDirection(event) {
     }
     if (event.code === 'ArrowDown' && snake.direction !== 'up') {
         snake.direction = 'down';
-    }
-    
+    }   
 }
 
 function moveSnake() {
@@ -125,6 +125,7 @@ function determineBorderCollision () {
     if (snake.body[0].x + GRID_SIZE >= canvas.width || snake.body[0].x <= 0
         || snake.body[0].y <= 0 || snake.body[0].y + GRID_SIZE >= canvas.height) {
         snake.direction = ''; 
+        gameOver = true;
         gameOverScreen.style.display = 'block'; 
     }
 }
@@ -134,6 +135,7 @@ function isSnakeTouchingItself() {
         for (let i = 1; i < snake.body.length; i++) {
             if (snake.body[0].x === snake.body[i].x && snake.body[0].y === snake.body[i].y) {
                 snake.direction = '';
+                gameOver = true;
                 gameOverScreen.style.display = 'block'; 
             }
         }
@@ -151,5 +153,6 @@ function restartGame() {
     apple.x = getRandomX();
     apple.y = getRandomY();
     gameOverScreen.style.display = 'none';
+    gameOver = false;
 }
 
